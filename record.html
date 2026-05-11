@@ -6,125 +6,19 @@
     <title>Daily Log - MTOOL</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <style>
-        body {
-            background-color: #1c1f21;
-            color: #ffffff;
-            font-family: "Helvetica Neue", sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            width: 100%;
-            max-width: 400px;
-        }
-        /* 返回鍵與標題 */
-        .top-nav {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-        }
-        .back-btn {
-            color: #fff;
-            text-decoration: none;
-            margin-right: 15px;
-        }
-
-        /* 選擇區塊 */
-        .meta-section {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px dashed #444;
-        }
-        .input-group label {
-            display: block;
-            font-size: 10px;
-            color: #888;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-        input[type="date"], select {
-            width: 100%;
-            background: #2a2d2f;
-            border: 1px solid #444;
-            color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-
-        /* 紀錄清單區 */
-        .log-section h2 {
-            font-size: 14px;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-            font-weight: 300;
-            color: #888;
-        }
-        .log-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
-        .log-item i {
-            margin-right: 10px;
-            font-size: 18px;
-            color: #555;
-            margin-top: 5px;
-        }
-        .log-input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 16px;
-            outline: none;
-            resize: none;
-            font-family: inherit;
-        }
-        .log-input::placeholder { color: #444; }
-
-        /* 新增按鈕 */
-        .add-btn {
-            width: 100%;
-            background: transparent;
-            border: 1px dashed #444;
-            color: #888;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-        .add-btn:active {
-            background: #ffffff;
-            color: #1c1f21;
-        }
-
-        /* 儲存按鈕 */
-        .save-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #fff;
-            color: #000;
-            padding: 12px 60px;
-            border-radius: 50px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border: none;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
+        body { background-color: #1c1f21; color: #ffffff; font-family: sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 400px; padding-bottom: 100px; }
+        .top-nav { display: flex; align-items: center; margin-bottom: 30px; letter-spacing: 2px; }
+        .back-btn { color: #fff; text-decoration: none; margin-right: 15px; }
+        .meta-section { display: grid; grid-template-columns: 1.5fr 1fr; gap: 15px; margin-bottom: 30px; border-bottom: 1px dashed #444; padding-bottom: 20px; }
+        .input-group label { display: block; font-size: 10px; color: #888; margin-bottom: 5px; text-transform: uppercase; }
+        input[type="date"], select { width: 100%; background: #2a2d2f; border: 1px solid #444; color: #fff; padding: 10px; border-radius: 8px; font-size: 14px; }
+        .log-section h2 { font-size: 14px; letter-spacing: 3px; margin-bottom: 20px; color: #888; font-weight: 300; }
+        .log-item { display: flex; align-items: flex-start; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .log-item i { margin-right: 10px; font-size: 18px; color: #555; margin-top: 5px; }
+        .log-input { width: 100%; background: transparent; border: none; color: #fff; font-size: 16px; outline: none; resize: none; }
+        .add-btn { width: 100%; background: transparent; border: 1px dashed #444; color: #888; padding: 15px; border-radius: 8px; margin-top: 10px; }
+        .save-btn { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 12px 60px; border-radius: 50px; font-weight: bold; border: none; letter-spacing: 2px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
@@ -142,7 +36,7 @@
         </div>
         <div class="input-group">
             <label>Weather</label>
-            <select>
+            <select id="weatherSelect">
                 <option value="sunny">Sunny</option>
                 <option value="cloudy">Cloudy</option>
                 <option value="rainy">Rainy</option>
@@ -153,33 +47,64 @@
 
     <div class="log-section">
         <h2>RECORDS</h2>
-        <div id="log-list">
-            <div class="log-item">
-                <i class="material-icons-round">circle</i>
-                <textarea class="log-input" placeholder="輸入今天的身體狀況..." rows="1"></textarea>
-            </div>
-        </div>
-        <button class="add-btn" onclick="addItem()">+ ADD NOTE</button>
+        <div id="log-list"></div>
+        <button class="add-btn" onclick="addItem('')">+ ADD NOTE</button>
     </div>
 
-    <button class="save-btn" onclick="alert('已模擬儲存！')">SAVE</button>
+    <button class="save-btn" onclick="saveData()">SAVE</button>
 </div>
 
 <script>
-    // 自動設定今天日期
-    document.getElementById('currentDate').valueAsDate = new Date();
+    // 1. 初始化：設定日期並讀取舊資料
+    window.onload = function() {
+        document.getElementById('currentDate').valueAsDate = new Date();
+        loadData();
+    };
 
-    // 新增條列項目的功能
-    function addItem() {
+    // 2. 新增項目的函數 (支援帶入文字)
+    function addItem(text = '') {
         const list = document.getElementById('log-list');
         const newItem = document.createElement('div');
         newItem.className = 'log-item';
         newItem.innerHTML = `
             <i class="material-icons-round">circle</i>
-            <textarea class="log-input" placeholder="輸入紀錄..." rows="1"></textarea>
+            <textarea class="log-input" placeholder="輸入紀錄..." rows="1">${text}</textarea>
         `;
         list.appendChild(newItem);
     }
+
+    // 3. 儲存資料到在地儲存 (LocalStorage)
+    function saveData() {
+        const date = document.getElementById('currentDate').value;
+        const weather = document.getElementById('weatherSelect').value;
+        const inputs = document.querySelectorAll('.log-input');
+        const logs = Array.from(inputs).map(input => input.value).filter(v => v !== '');
+
+        const data = { date, weather, logs };
+        
+        // 使用日期作為 Key，這樣每天的紀錄都會分開存
+        localStorage.setItem('mtool_log_' + date, JSON.stringify(data));
+        alert('紀錄已儲存在手機中！');
+    }
+
+    // 4. 讀取資料
+    function loadData() {
+        const date = document.getElementById('currentDate').value;
+        const savedData = localStorage.getItem('mtool_log_' + date);
+        const list = document.getElementById('log-list');
+        list.innerHTML = ''; // 先清空
+
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            document.getElementById('weatherSelect').value = data.weather;
+            data.logs.forEach(text => addItem(text));
+        } else {
+            addItem(''); // 如果沒資料，預設給一個空白行
+        }
+    }
+
+    // 當日期改變時，自動讀取該日期的資料
+    document.getElementById('currentDate').onchange = loadData;
 </script>
 
 </body>
