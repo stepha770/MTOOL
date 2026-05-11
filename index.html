@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>我的生活 App</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        body { font-family: sans-serif; background-color: #F2F4F7; margin: 0; display: flex; justify-content: center; }
+        .app { width: 100%; max-width: 400px; padding: 40px 20px; }
+        .header h1 { font-size: 24px; margin: 0; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+        .card { background: white; border-radius: 20px; padding: 20px; text-align: center; text-decoration: none; color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .icon-box { width: 50px; height: 50px; border-radius: 15px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; }
+        .bg-1 { background: #4A90E2; } /* 月曆藍 */
+        .bg-2 { background: #FF7675; } /* 膠囊紅 */
+        .bg-3 { background: #FDCB6E; } /* 燈具黃 */
+        .bg-4 { background: #55E6C1; } /* 備註綠 */
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <h1>生活儀表板</h1>
+        </div>
+        <div class="grid">
+            <a href="schedule.html" class="card">
+                <div class="icon-box bg-1"><i class="material-icons-round">calendar_month</i></div>
+                <span>行程規劃</span>
+            </a>
+            <a href="record.html" class="card">
+                <div class="icon-box bg-2"><i class="material-icons-round">medication</i></div>
+                <span>身體狀況</span>
+            </a>
+            <a href="shopping.html" class="card">
+                <div class="icon-box bg-3"><i class="material-icons-round">lightbulb</i></div>
+                <span>補給清單</span>
+            </a>
+            <a href="notes.html" class="card">
+                <div class="icon-box bg-4"><i class="material-icons-round">event_note</i></div>
+                <span>事情備註</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
