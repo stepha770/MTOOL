@@ -186,4 +186,76 @@
         </div>
     </div>
 
-    <div class="log-list-title
+    <div class="log-list-title">每日詳情</div>
+    <div id="logContainer">
+        </div>
+
+    <button class="add-btn" onclick="addNewItem('')">
+        <i class="material-icons-round">add_circle_outline</i>
+        新增紀錄項目
+    </button>
+
+    <button class="save-btn" onclick="saveToLocal()">確認儲存</button>
+</div>
+
+<script>
+    // 初始化
+    window.onload = function() {
+        document.getElementById('recordDate').valueAsDate = new Date();
+        loadFromLocal();
+    };
+
+    // 新增輸入框
+    function addNewItem(text = '') {
+        const container = document.getElementById('logContainer');
+        const div = document.createElement('div');
+        div.className = 'log-item';
+        div.innerHTML = `
+            <i class="material-icons-round">radio_button_checked</i>
+            <textarea class="log-input" placeholder="點擊輸入內容..." rows="1" oninput="autoHeight(this)">${text}</textarea>
+        `;
+        container.appendChild(div);
+        const textarea = div.querySelector('textarea');
+        autoHeight(textarea);
+    }
+
+    // 自動調整輸入框高度
+    function autoHeight(element) {
+        element.style.height = 'auto';
+        element.style.height = element.scrollHeight + 'px';
+    }
+
+    // 儲存功能 (LocalStorage)
+    function saveToLocal() {
+        const date = document.getElementById('recordDate').value;
+        const weather = document.getElementById('weatherSelect').value;
+        const inputs = document.querySelectorAll('.log-input');
+        const logs = Array.from(inputs).map(i => i.value).filter(v => v.trim() !== '');
+
+        const data = { weather, logs };
+        localStorage.setItem('life_log_' + date, JSON.stringify(data));
+        alert('✅ 資料已儲存在這台手機囉！');
+    }
+
+    // 讀取功能
+    function loadFromLocal() {
+        const date = document.getElementById('recordDate').value;
+        const saved = localStorage.getItem('life_log_' + date);
+        const container = document.getElementById('logContainer');
+        container.innerHTML = '';
+
+        if (saved) {
+            const data = JSON.parse(saved);
+            document.getElementById('weatherSelect').value = data.weather;
+            data.logs.forEach(text => addNewItem(text));
+        } else {
+            addNewItem(''); // 預設給一個空的
+        }
+    }
+
+    // 當日期變動時讀取該日資料
+    document.getElementById('recordDate').onchange = loadFromLocal;
+</script>
+
+</body>
+</html>
